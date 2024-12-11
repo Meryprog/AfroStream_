@@ -24,8 +24,10 @@
     >
       <div class="grid grid-cols-1 gap-4">
         <!-- Les espaces entre les images sont ajoutés via gap-4 -->
-        <RouterLink to="/onevent" v-for="event in events" :key="event.id">
-          <div
+         <div v-for="event in events" :key="event.id">
+            <div v-if="event.status =='Bientôt'">
+              <RouterLink to="/eventfutu">
+                <div
             :style="{ backgroundImage: `url(${event.image})` }"
             class="relative bg-cover bg-center h-52 rounded-lg p-4 text-white flex flex-col justify-between"
           >
@@ -43,7 +45,31 @@
               {{ event.status }}
             </span>
           </div>
-        </RouterLink>
+              </RouterLink>
+            </div>
+            <div v-else>
+              <RouterLink to="/onevent">
+                <div
+            :style="{ backgroundImage: `url(${event.image})` }"
+            class="relative bg-cover bg-center h-52 rounded-lg p-4 text-white flex flex-col justify-between"
+          >
+            <div>
+              <h3 class="text-lg font-bold">{{ event.title }}</h3>
+              <p class="text-sm">{{ event.views }} vues . {{ event.date }}</p>
+            </div>
+            <span
+              :class="{
+                'bg-red-600': event.status === 'Terminée',
+                'bg-green-600': event.status === 'Bientôt'
+              }"
+              class="absolute top-4 right-4 px-2 py-1 text-xs rounded-md uppercase"
+            >
+              {{ event.status }}
+            </span>
+          </div>
+              </RouterLink>
+            </div>
+         </div>
       </div>
     </main>
 
